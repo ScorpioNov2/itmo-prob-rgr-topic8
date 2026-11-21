@@ -1,0 +1,9 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.idea/
+plots/*.png
+results/*.csv
+results/*.json
+!results/README.txt
