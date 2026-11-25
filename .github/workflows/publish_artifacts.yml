@@ -1,0 +1,50 @@
+name: Publish Artifacts (Gate C)
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate-artifacts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run strict contract check
+        run: python check_contract.py --strict
+
+      - name: Generate results and plots
+        run: python main.py
+
+      - name: Push results and plots to 'artifacts' branch
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          git checkout -B artifacts
+          git add -f results/ plots/
+
+          if ! git diff --staged --quiet; then
+            git commit -m "chore(gate-c): publish results and plots from ${{ github.sha }}"
+            git push -f origin artifacts
+          else
+            echo "No changes in results/ or plots/."
+          fi

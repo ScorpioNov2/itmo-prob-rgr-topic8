@@ -759,14 +759,35 @@ python check_contract.py
 - 5.2 — Islam (`random`, `numpy`) + Sagor (`scipy.stats`) + Rami (`matplotlib`), Али объединяет стиль;
 - 5.3 — Islam;
 - раздел 6 — материалы кода + таблицы из `results/` + 4 PNG;
-- раздел 7 — Дыонг;
+- раздел 7 — Зыонг;
 - приложение — листинг `config.py`, `generator.py`, `analyzer.py`, `visualizer.py`, `main.py`.
 
 ## Самое важное правило
 
 **Числа не перепечатывать из Telegram и не брать из чужих черновиков.**
 
-После финального запуска брать их только из `results/`.
+После прохождения **Gate B** (когда все модули смержены в `main`) итоговые числа и 4 PNG-графика брать строго из актуальных папок `results/` и `plots/` одним из двух способов:
+
+### Способ 1: Скачать готовые артефакты с GitHub (без запуска Python)
+
+После каждого merge в `main` GitHub Actions автоматически проверяет контракт и публикует свежие результаты в отдельную ветку **`artifacts`**.
+
+1. Откройте ветку **[`artifacts`](https://github.com/ScorpioNov2/itmo-prob-rgr-topic8/tree/artifacts)** или скачайте всё одним архивом: **[Скачать `artifacts.zip`](https://github.com/ScorpioNov2/itmo-prob-rgr-topic8/archive/refs/heads/artifacts.zip)**.
+2. Возьмите итоговые таблицы из папки **[`results/`](https://github.com/ScorpioNov2/itmo-prob-rgr-topic8/tree/artifacts/results)** (`.csv`, `.json`) и 4 графика из папки **[`plots/`](https://github.com/ScorpioNov2/itmo-prob-rgr-topic8/tree/artifacts/plots)** (`.png`).
+3. *Проверка актуальности:* убедитесь на странице **[Actions — Publish Artifacts (Gate C)](https://github.com/ScorpioNov2/itmo-prob-rgr-topic8/actions/workflows/publish_artifacts.yml)**, что последний запуск завершился с зелёной галочкой.
+
+### Способ 2: Сгенерировать локально из ветки `main`
+
+Если Python и зависимости из `requirements.txt` установлены локально:
+
+```bash
+git checkout main
+git pull origin main
+python check_contract.py --strict
+python main.py
+```
+
+После выполнения актуальные таблицы появятся в локальной папке `results/`, а 4 графика — в папке `plots/`.
 
 ## Definition of Done
 
