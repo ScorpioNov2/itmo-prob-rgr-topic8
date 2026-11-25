@@ -27,4 +27,4 @@ jobs:
 
       - name: Run contract checker
         run: |
-          python check_contract.py
+          python check_contract.py --strict
